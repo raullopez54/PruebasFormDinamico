@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        
+        <div id="contenedor">
+            <form name="form1">
+                <input type="text"  name="nombre" value="input 1-0"/>
+                <input type="text"  name="descripcion" value="input 1-1"/>
+                <input type="checkbox"  name="check" checked/>
+            </form>
+            <form name="form2">
+                <input type="text" name="nombre" value="input 2-0"/>
+                <input type="text"  name="descripcion" value="input 2-1"/>
+                <input type="checkbox"  name="check" checked/>
+            </form>
+             <form name="form3">
+                <input type="text" name="nombre" value="input 3-0"/>
+                <input type="text"  name="descripcion" value="input 3-1"/>
+                <input type="checkbox"  name="check" />
+            </form>
+            
+            <input type="button" value="SEND"/>
+        </div>
+        
+        <script>
+            
+            (function()
+            {
+              
+              var forms = document.forms;
+              var button = document.querySelector('#contenedor input[type="button"]');
+              var send = [];
+              
+              var responseData =
+                	 [{
+                		nombre:"input 1-0",
+                		descripcion: "input 1-1"
+                		 
+                	 },
+                	{
+                		nombre:"input 2-0",
+                		descripcion: "input 2-1"
+                		 
+                	 },
+                	{
+                		nombre:"input 3-0",
+                		descripcion: "input 3-1"
+                		 
+                	 }];
+              
+              var data = responseData;
+              var properties = [];
+              
+             
+              (function ()
+              {
+             	 for(var attr in data[0])
+             		 {
+             		 	properties.push(
+             		 			{
+             		 				clave: attr,
+             		 				valor: data[0][attr]
+             		 				
+             		 			});
+             		 	
+             		 }
+              })();
+              
+              button.addEventListener('click', function(e)
+            		  {
+            	          findForms();
+            	          
+            	          for (var i = 0, max= send.length; i < max; i++) {
+               				
+                         
+                         	//console.log("---> " + JSON.stringify(send[i]));
+             			} 
+                      
+            		  });
+              
+              //console.log(button);
+             
+             function findForms(){
+            	 
+            	 for (var i = 0, maxi=forms.length; i < maxi; i++) {
+
+            		 if(forms[i].check.checked){
+            			 
+            			 var obj = {};
+                         
+                         
+                         for (var j = 0, maxj = properties.length; j < maxj; j++) {
+            				
+                        	 //console.log(properties[i]);
+                        
+                        	 obj[properties[j].clave] = forms[i][properties[j].clave].value; //MANERA DE CAPTURAR DINAMICO EN UNA SOLA LINEA
+                        	 
+            			}
+
+            			 send.push(objJSON(forms[i].nombre.value, forms[i].descripcion.value))
+            			 //console.log(forms[i].nombre.value);
+                    	 //console.log(forms[i].descripcion.value);
+            		 }
+  				}
+            	 
+            	 console.log(JSON.stringify(send));
+            	 send.length = 0; //Para limpiar el array send y que no se repitan elementos
+             }
+             
+             function objJSON(name, desc)
+             {
+            	 var obj =
+            	 {
+            	     nombre: name,
+                	 descripcion: desc
+            	 };
+            	 
+            	 return obj;
+             }
+             
+             
+         //<form name="form1">
+         //    <input type="text"  name="nombre" value="input 1-0"/>
+         //    <input type="text"  name="descripcion" value="input 1-1"/>
+         //<input type="checkbox"  name="check" checked/>
+         //</form>
+
+             function row(data)
+             {
+            	 
+            	 for (var i = 0, maxi=data.length; i < maxi; i++) {
+
+            		 for (var j = 0, maxj=properties.length; j < maxj; j++) {
+						
+            			 var name = properties[j].clave;
+            		     var value = data[i][properties[j].clave];
+            			 console.log('<input type="text" name="' + name +'"value="' + value + '"/>"' );
+            			
+            			
+					}
+				}
+            	 
+             }
+             
+             row(data);
+             
+             
+            })();
+      
+        </script>
+        
+        
+        
+    </body>
+</html>

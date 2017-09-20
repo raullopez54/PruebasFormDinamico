@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>PRUEBA 2</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        
+        <div id="contenedor">
+            <form name="form1">
+                <input type="text"  name="nombre" value="input 1-0"/>
+                <input type="text"  name="descripcion" value="input 1-1"/>
+                <input type="checkbox"  name="check" checked/>
+            </form>
+            <form name="form2">
+                <input type="text" name="nombre" value="input 2-0"/>
+                <input type="text"  name="descripcion" value="input 2-1"/>
+                <input type="checkbox"  name="check" checked/>
+            </form>
+             <form name="form3">
+                <input type="text" name="nombre" value="input 3-0"/>
+                <input type="text"  name="descripcion" value="input 3-1"/>
+                <input type="checkbox"  name="check" />
+            </form>
+            
+            <input type="button" value="SEND"/>
+        </div>
+        
+        <script>
+        
+        /*
+        PASO A SEGUIR
+        1) Se recorre el array de objetos con un for.
+        2) Se recorre las propiedades de cada objeto.
+        */
+            
+            (function()
+            {
+              
+              var forms = document.forms;
+              //var button = document.querySelector('#contenedor input[type="button"]');
+              //var send = [];
+              
+              var responseData =
+                	 [{
+                		nombre:"Raul",
+                		apellidos: "Lopez"
+                	 },
+                	{
+                		nombre:"Lourdes",
+                		descripcion:"aaaaaaaaaa",
+                		edad: "33",
+                		sexo: "Mujer"	 
+                	 }];
+              
+              var data = responseData;
+              
+             /* console.log("VER DATA");
+              for (var i = 0, max=data.length; i < max; i++) { //Para saber si se leen los dos objetos
+				
+            	  console.log("------> Ver data" + data[i]);
+            	   
+			}*/
+              
+              //******************************************************************************************** 
+              //PARA SACAR EL MODELO DE OBJETO
+              var properties = []; //Creo un array
+
+              var prp = "propiedad";
+              
+              var maxProp = 0;   //Defino variable para saber el número máximo de propiedades del objeto.
+              var modelo = {};  //Creo un objeto
+              
+
+              for (var i = 0, maxi = data.length; i < maxi; i++) { //Recorro la lista de objetos
+				
+            	  var t = 0;
+            	  var cont = 0; //Defino un contador de propiedades
+            	  
+            	  for ( var item in data[i]) {  //Recorro las propiedades de cada objeto de la lista
+					
+            		  console.log("------------");
+            		  propiedad = item;
+
+            		modelo[item] = "OK " + i;
+
+            		 cont++;
+            		 t++;
+            	  
+            	  
+            	console.log("-----------");
+            	  
+            	if(cont > maxProp){  //Modifico el numero de propiedades que tiene un objeto
+            		
+            		maxProp = cont;
+            	} 
+            	
+            	//console.log("CONTADOR" + maxProp);
+              }
+            }
+
+					console.log("OBJETO MODELO");
+					console.log(JSON.stringify(modelo)); //Muestro el objeto con las propiedades
+					
+		//******************************************************************************************** 
+		
+		var arr = [];
+					
+		for (var i = 0, max=data.length; i < max; i++) {  //Recorro la lista de objetos
+			
+			var objSend = {}; //Creo un objeto
+			console.log("---------------------------" + i);
+			for (var prop in modelo){ //Recorro las propiedades del objeto
+				
+				var bln=false; //Defino una variable booleana para saber si coinciden las propiedades
+				
+				for(var item in data[i]){ //Recorro las propiedades de cada objeto de la lista
+					
+					if(item === prop){ //Si coinciden la propiedad del objeto de la lista y del model bln se pone a true
+						
+						bln = true;
+					}
+				}
+				
+				//Esta expresion ternaria equivale al if que esta seguido a ella.
+				
+				//objSend[prop] = (bln) ? data[i][prop] : null;
+				
+				if(bln){  //Si bln es true se asigna el valor de la propiedad a la misma propiedad en el objeto
+					
+					objSend[prop] = data[i][prop];
+					
+				}
+				else{  //Sino la propiedad se pone a null porque el objeto no la tiene
+					
+					objSend[prop] = null;
+				}
+				
+			}
+			
+			arr.push(objSend);  //Se mete el objeto en un array, este array tiene un objeto en cada indice
+			console.log(JSON.stringify(objSend)); //Se utiliza para ver el objeto.
+		}
+
+		})();
+		</script>
+        
+        
+        
+    </body>
+</html>
